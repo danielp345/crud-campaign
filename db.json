@@ -1,14 +1,24 @@
 {
-	"campaigns": [
-		{
-			"name": "updtaed",
-			"keywords": "22",
-			"bidAmount": "2",
-			"fund": "2",
-			"status": "on",
-			"town": "Cracow",
-			"radius": "222",
-			"id": 3
-		}
-	]
+  "campaigns": [
+    {
+      "name": "test555",
+      "keywords": "123",
+      "bidAmount": "12",
+      "fund": "12",
+      "status": "on",
+      "town": "Cracow",
+      "radius": "44",
+      "id": 1
+    },
+    {
+      "name": "vv",
+      "keywords": "cdsa",
+      "bidAmount": "1",
+      "fund": "10",
+      "status": "on",
+      "town": "Cracow",
+      "radius": "9",
+      "id": 2
+    }
+  ]
 }

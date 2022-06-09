@@ -3,6 +3,8 @@ import { createContext, useState, useEffect } from "react"
 const CampaignContext = createContext()
 
 export const CampaignProvider = ({ children }) => {
+	const baseUrl = "https://crud-api-json-server.herokuapp.com/campaigns"
+
 	const [isLoading, setIsLoading] = useState(true)
 	const [campaigns, setCampaigns] = useState([])
 	const initialState = {
@@ -18,14 +20,16 @@ export const CampaignProvider = ({ children }) => {
 	const [creating, setCreating] = useState(false)
 	const [editing, setEditing] = useState(false)
 
-	const creatingToggle = () => {
-		setCreating((prevState) => !prevState)
+	const formClosing = (e) => {
+		e.preventDefault()
 		setCampaignData(initialState)
+		window.scrollTo(0, 0)
+		if (editing) {
+			setEditing(false)
+			return
+		}
+		setCreating(false)
 	}
-
-	useEffect(() => {
-		fetchData()
-	}, [])
 
 	const onSubmit = (e) => {
 		e.preventDefault()
@@ -37,12 +41,17 @@ export const CampaignProvider = ({ children }) => {
 		setCreating(false)
 		setEditing(false)
 		setCampaignData(initialState)
+		window.scrollTo(0, 0)
 	}
 
+	useEffect(() => {
+		fetchData()
+	}, [])
+
 	const fetchData = () => {
-		fetch("http://localhost:5000/campaigns")
+		fetch(baseUrl)
 			.then((res) => res.json())
-			.then((data) => setCampaigns(data))
+			.then((data) => setCampaigns(data.reverse()))
 			.catch((error) => {
 				console.error("Error:", error)
 			})
@@ -50,7 +59,7 @@ export const CampaignProvider = ({ children }) => {
 	}
 
 	const createCampaign = (data) => {
-		fetch("http://localhost:5000/campaigns", {
+		fetch(baseUrl, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -58,48 +67,35 @@ export const CampaignProvider = ({ children }) => {
 			body: JSON.stringify(data),
 		})
 			.then((res) => res.json())
-			.then((data) => {
-				console.log(data)
+			.then(() => {
+				fetchData()
 			})
 			.catch((error) => {
 				console.error(error)
 			})
-
-		setCampaigns([campaignData, ...campaigns])
 	}
 
 	const editCampaign = (data) => {
-		fetch("http://localhost:5000/campaigns/" + data.id, {
+		fetch(`${baseUrl}/${data.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data)
+			.then(() => {
+				fetchData()
 			})
 			.catch((error) => {
 				console.error(error)
 			})
-
-		setCampaigns(
-			campaigns.map((item) =>
-				item.id === data.id ? { ...item, ...data } : item
-			)
-		)
 	}
 
 	const deleteCampaign = (id) => {
 		if (window.confirm("Are you sure you want to delete?")) {
-			fetch("http://localhost:5000/campaigns/" + id, {
+			fetch(`${baseUrl}/${id}`, {
 				method: "DELETE",
-			})
-				.then((res) => res.json())
-				.then((data) => console.log(data))
-
-			setCampaigns(campaigns.filter((item) => item.id !== id))
+			}).then(() => fetchData())
 		}
 	}
 
@@ -110,7 +106,7 @@ export const CampaignProvider = ({ children }) => {
 				campaignData,
 				isLoading,
 				creating,
-				creatingToggle,
+				formClosing,
 				setCreating,
 				editing,
 				setEditing,

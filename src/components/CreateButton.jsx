@@ -6,7 +6,8 @@ function CreateButton() {
 		setCampaignData,
 		onSubmit,
 		creating,
-		creatingToggle,
+		setCreating,
+		formClosing,
 		editing,
 	} = useContext(CampaignContext)
 	const { name, keywords, bidAmount, fund, status, town, radius } = campaignData
@@ -21,7 +22,9 @@ function CreateButton() {
 	if (creating === false && editing === false) {
 		return (
 			<div>
-				<button onClick={creatingToggle}>Create new campaign</button>
+				<button className="btn create-btn" onClick={() => setCreating(true)}>
+					Create new campaign
+				</button>
 			</div>
 		)
 	}
@@ -29,84 +32,110 @@ function CreateButton() {
 	return (
 		<div>
 			<form className="form" onSubmit={onSubmit}>
-				<label>
-					Name
-					<input
-						type="text"
-						name="name"
-						id="name"
-						value={name}
+				<label className="form-label">Name </label>
+				<input
+					className="form-input"
+					type="text"
+					name="name"
+					id="name"
+					value={name}
+					onChange={onChange}
+					required
+				/>
+
+				<label className="form-label">Keywords </label>
+				<input
+					className="form-input"
+					type="text"
+					name="keywords"
+					id="keywords"
+					value={keywords}
+					onChange={onChange}
+					required
+				/>
+
+				<label className="form-label">Bid amount [$] </label>
+				<input
+					className="form-input"
+					type="number"
+					name="bidAmount"
+					id="bidAmount"
+					value={bidAmount}
+					onChange={onChange}
+					required
+				/>
+
+				<label className="form-label">Fund [$] </label>
+				<input
+					className="form-input"
+					type="number"
+					name="fund"
+					id="fund"
+					value={fund}
+					onChange={onChange}
+					required
+				/>
+
+				<label className="form-label">Status </label>
+				<div className="form-radio">
+					<div className="radio">
+						<input
+							type="radio"
+							name="status"
+							id="status"
+							value="on"
+							checked={status === "on"}
+							onChange={onChange}
+						/>
+						On
+					</div>
+					<div className="radio">
+						<input
+							type="radio"
+							name="status"
+							id="status"
+							value="off"
+							checked={status === "off"}
+							onChange={onChange}
+						/>
+						Off
+					</div>
+				</div>
+
+				<label className="form-label">Town </label>
+				<div className="div-select">
+					<select
+						className="form-input select"
+						name="town"
+						id="town"
+						value={town}
 						onChange={onChange}
-						required
-					/>
-				</label>
-				<label>
-					Keywords
-					<input
-						type="text"
-						name="keywords"
-						id="keywords"
-						value={keywords}
-						onChange={onChange}
-						required
-					/>
-				</label>
-				<label>
-					Bid amount
-					<input
-						type="number"
-						name="bidAmount"
-						id="bidAmount"
-						value={bidAmount}
-						onChange={onChange}
-						required
-					/>
-				</label>
-				<label>
-					Fund
-					<input
-						type="number"
-						name="fund"
-						id="fund"
-						value={fund}
-						onChange={onChange}
-						required
-					/>
-				</label>
-				<label>
-					Status
-					<input
-						type="radio"
-						name="status"
-						id="status"
-						value={status}
-						defaultChecked
-					/>
-					On
-					<input type="radio" name="status" id="status" value={status} />
-					Off
-				</label>
-				<label>
-					Town
-					<select name="town" id="town" value={town} onChange={onChange}>
+					>
 						<option value="Cracow">Cracow</option>
 						<option value="Warsaw">Warsaw</option>
+						<option value="London">London</option>
+						<option value="Paris">Paris</option>
 					</select>
-				</label>
-				<label>
-					Radius
-					<input
-						type="number"
-						name="radius"
-						id="radius"
-						value={radius}
-						onChange={onChange}
-						required
-					/>
-				</label>
-				<div>
-					<button type="submit">Submit</button>
-					<button onClick={creatingToggle}>Cancel</button>
+				</div>
+
+				<label className="form-label">Radius [km] </label>
+				<input
+					className="form-input"
+					type="number"
+					name="radius"
+					id="radius"
+					value={radius}
+					onChange={onChange}
+					required
+				/>
+
+				<div className="form-btns">
+					<button className="btn form-btn" type="submit">
+						Submit
+					</button>
+					<button className="btn form-btn" onClick={formClosing}>
+						Cancel
+					</button>
 				</div>
 			</form>
 		</div>
