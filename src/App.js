@@ -1,6 +1,6 @@
 import List from "./components/List"
 import Header from "./components/Header"
-import CreateButton from "./components/CreateButton"
+import CampaignForm from "./components/CampaignForm"
 import { CampaignProvider } from "./context/CampaignContext"
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
 		<CampaignProvider>
 			<div className="app">
 				<Header />
-				<CreateButton />
+				<CampaignForm />
 				<List />
 			</div>
 		</CampaignProvider>

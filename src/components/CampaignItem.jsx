@@ -26,7 +26,12 @@ function CampaignItem({ campaign }) {
 						Fund: <span className="info">{campaign.fund} $</span>
 					</p>
 					<p>
-						Status: <span className="info">{campaign.status}</span>
+						Status:{" "}
+						<span
+							className={`info ${campaign.status === "on" ? "green" : "red"}`}
+						>
+							{campaign.status}
+						</span>
 					</p>
 					<p>
 						Town: <span className="info">{campaign.town}</span>

@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import CampaignContext from "../context/CampaignContext"
-function CreateButton() {
+function CampaignForm() {
 	const {
 		campaignData,
 		setCampaignData,
@@ -142,4 +142,4 @@ function CreateButton() {
 	)
 }
 
-export default CreateButton
+export default CampaignForm

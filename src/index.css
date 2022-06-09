@@ -160,6 +160,14 @@ ul {
 	font-weight: bold;
 }
 
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
 .btn-item {
 	width: 60px;
 	height: 30px;
